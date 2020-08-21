@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="brainz.js"></script>
+    <link rel="stylesheet" href="index.css">
+    <link rel="shortcut icon" href="./res/favico.ico" type="image/x-icon">
+
+    <title>Car media system</title>
+</head>
+
+<body>
+    <div id="menu">
+        <span class="menuItem active">Back camera</span>
+        <span class="menuItem">YouTube playlist</span>
+        <span class="menuItem">Stop YouTube video/audio</span>
+        <span class="menuItem">Test2 test2</span>
+        <span class="menuItem">Test3 test3</span>
+        <span class="menuItem">Test4 test4</span>
+    </div>
+
+    <div class="menuItemPanel">
+        <video autoplay="true" id="videoElement">
+
+        </video>
+
+        <script>
+            var video = document.querySelector("#videoElement");
+
+            if (navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function (stream) {
+                        video.srcObject = stream;
+                    })
+                    .catch(function (err0r) {
+                        console.log("Something went wrong!");
+                    });
+            }
+        </script>
+    </div>
+
+    <div class="menuItemPanel">
+        <!-- TODO: reformat code to be controlable with JS -->
+        <iframe width="480" height="234" src="https://www.youtube.com/embed/XFigUHYW7io" controls=0 frameborder="0"
+            allow="autoplay;" allowfullscreen></iframe>
+    </div>
+
+    <div class=" menuItemPanel">
+        <p>Stopping YouTube video/audio</p>
+    </div>
+    <div class="menuItemPanel">
+        <p>Test2</p>
+    </div>
+    <div class="menuItemPanel">
+        <p>Test3</p>
+    </div>
+    <div class="menuItemPanel">
+        <p>Test4</p>
+    </div>
+</body>
+
+</html>

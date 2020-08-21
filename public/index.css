@@ -1,0 +1,38 @@
+@font-face{
+    font-family: coolFont;
+    src: url("./res/nulshock.ttf");
+}
+
+html, body {
+    background-color: #101820FF;
+}
+
+*{
+    font-family: "coolFont";
+}
+
+#menu > span{
+    
+}
+
+.menuItem{
+    border: 3px solid transparent;
+    border-radius: 10px;
+    padding: 0.5em;
+    display: block;
+    transition: ease-out 150ms border-color;
+    color: #F2AA4C;
+}
+
+.menuItem.active{
+    border: 3px solid brown;
+}
+
+.menuItemPanel{
+    display: none;
+    color: whitesmoke;
+}
+
+.menuItemPanel.active{
+    display: block;
+}
