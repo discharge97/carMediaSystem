@@ -1,14 +1,32 @@
-var robot = require("robotjs");
 const express = require('express');
 const Gpio = require('onoff').Gpio;
-// const button = new Gpio(6, 'in', 'rising', { debounceTimeout: 0 });
-// const button = new Gpio(7, 'in', 'rising', { debounceTimeout: 0 });
-// const button = new Gpio(7, 'in', 'rising', { debounceTimeout: 10 }); // encoder button, add debounce because it's a real push button
 const app = new express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
+const rotaryEncoder = require('./encoder');
 
-// TODO: setup encoder with code got GPIO pin (not 4)
+const myEncoder = rotaryEncoder(5, 6, 7, 0); // Using BCM 5, BCM 6 & BCM 7 on the PI; two for the rotation and one for the push button
+
+myEncoder.on('rotation', direction => {
+    if (direction > 0) {
+        // console.log('Encoder rotated right; clockwise');
+        selectNext();
+    } else {
+        // console.log('Encoder rotated left; counter clockwise');
+        selectPrevious();
+    }
+});
+
+myEncoder.on('click', pressState => {
+    switch (pressState) {
+        case 0:
+            chooseOption();
+            break;
+        // case 1:
+        //     console.log('Encoder button released');
+        //     break;
+    }
+});
 
 app.use(express.static(`${process.env.PWD}/public`));
 server.listen(8080);

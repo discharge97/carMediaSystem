@@ -7,8 +7,6 @@ const menuItems = {};
 initMenu();
 
 
-// TODO: rewrite logic for 
-
 socket.on("next", () => {
     handleMenu(1);
 });
