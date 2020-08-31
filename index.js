@@ -34,7 +34,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.post('/youtube', (req, res) => {
-    if (playVideo(req.body.urlID)) {
+    if (req.body.urlID) {
         playVideo(req.body.urlID);
         res.sendStatus(200);
     } else {
