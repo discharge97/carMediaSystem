@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="brainz.js"></script>
+    <script type="module" src="brainz.js"></script>
+    <script src="./socket.io.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
     <link rel="stylesheet" href="index.css">
     <link rel="shortcut icon" href="./res/favico.ico" type="image/x-icon">
 
@@ -42,9 +44,8 @@
     </div>
 
     <div class="menuItemPanel">
-        <!-- TODO: reformat code to be controlable with JS -->
-        <iframe width="480" height="234" src="https://www.youtube.com/embed/XFigUHYW7io" controls=0 frameborder="0"
-            allow="autoplay;" allowfullscreen></iframe>
+        <div id="player"></div>
+
     </div>
 
     <div class=" menuItemPanel">
