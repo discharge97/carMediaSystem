@@ -65,7 +65,3 @@ function chooseOption() {
 function playVideo(urlID) {
     io.emit("youtube", urlID);
 }
-
-// setInterval(() => {
-//     selectNext();
-// }, 1000)

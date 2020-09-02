@@ -1,6 +1,8 @@
 const socket = io();
 var index = 0;
 var menuItems = {};
+window.inactiveSeconds = 0;
+window.isMenu = true;
 initMenu();
 
 socket.on('connect', () => {
@@ -25,22 +27,28 @@ socket.on("youtube", data => {
     playVideo(data);
 });
 
+setInterval(() => {
+    if (player.PlayerState == YT.PlayerState.PLAYING || isMenu) {
+        inactiveSeconds = 0;
+        return;
+    }
+
+    inactiveSeconds++;
+
+    if (inactiveSeconds > 15) {
+        showMenu();
+    }
+
+
+}, 1000);
+
 //  ========== YOUTUBE LOGIC ==========
-
-// var tag = document.createElement('script');
-// tag.src = "https://www.youtube.com/iframe_api";
-// var firstScriptTag = document.getElementsByTagName('script')[0];
-// firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-// 3. This function creates an <iframe> (and YouTube player)
-//    after the API code downloads.
 
 var player;
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
-        height: '390',
-        width: '640',
-        videoId: 'M7lc1UVf-VE',
+        height: '260',
+        width: '480',
         events: {
             'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
@@ -99,6 +107,7 @@ function handleMenu(val) {
         index = menuItems.items.length;
     }
 
+    showMenu();
     selectMenuItem();
 
 }
@@ -122,7 +131,14 @@ function chooseCurrentMenuItem(forceSelect = false) {
 
     switch (index) {
         case 2:
-            // TODO: stop YT player 
+            player.PlayerState
+            if (player.PlayerState == YT.PlayerState.PLAYING) {
+                player.pauseVideo();
+            } else {
+                player.playVideo();
+            }
+            break;
+        case 3:
             stopYTVideo();
             stopVi
             break;
@@ -144,10 +160,30 @@ function chooseCurrentMenuItem(forceSelect = false) {
             break;
     }
 
+    hideMenu();
 }
 
 function initMenu() {
     menuItems.items = document.getElementsByClassName("menuItem");
     menuItems.panels = document.getElementsByClassName("menuItemPanel");
     index = 0;
+}
+
+function showMenu() {
+    if (menuItems.items == undefined || menuItems.panels == undefined) initMenu();
+
+    document.getElementById("menu").style.display = "block";
+    index = 0;
+    for (let i = 0; i < menuItems.items.length; i++) {
+        menuItems.panels[i].style.display = "none";
+        menuItems.items[index].classList.remove("active");
+    }
+    menuItems.items[index].classList.add("active");
+    isMenu = true;
+
+}
+
+function hideMenu() {
+    document.getElementById("menu").style.display = "none";
+
 }
